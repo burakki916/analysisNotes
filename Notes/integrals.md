@@ -137,7 +137,7 @@ $$
 $$
     \frac{d}{dx} \int_a^x f(t) dt = f(x) 
 $$
-## Cauchy Criterion  
+## Cauchy Criterion (7.2)
 A function $[a,b] \to \mathbb{R}$ belongs to $\mathcal{R}[a,b]$ if and only if  
 for every $\epsilon > 0$ there is $\eta_\epsilon >0$ such that if 
 $\dot{\mathcal{P}}$ and 

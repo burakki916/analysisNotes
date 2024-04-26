@@ -23,7 +23,7 @@ $$
 Thus, we have that $S(f;\mathcal{P}) = S(f;\mathcal{Q})$ which is a contradiction. Thus, $f$ is not Riemann integrable.
 ### Problem 12 
 #### Problem 
-Let $f(x) =  x+ 1 $ irf in \mathbb{Q}$ and $f(x) = 0$ if $x \in \mathbb{R} \setminus \mathbb{Q}$. Show that $f$ is not Riemann integrable on $[0,1]$. 
+Let $f(x) =  x+ 1$ for $ x \in \mathbb{Q}$ and $f(x) = 0$ if $x \in \mathbb{R} \setminus \mathbb{Q}$. Show that $f$ is not Riemann integrable on $[0,1]$. 
 #### Solution  
 Let $\dot{\mathcal{P}}$ and $\dot{\mathcal{Q}}$ be tagged partitions, defined by  
 $$
