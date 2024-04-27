@@ -3,6 +3,60 @@ import datetime
 import threading
 import time
 import pygame  # You may need to install this library: pip install pygame
+def generateTodaysTasks(tasksDirectory): 
+    tasks = [] 
+    taskFiles = []
+    taskFileCounter = 0 
+    for file in os.listdir(tasksDirectory):
+        if(file.endswith(".rakkiTask")):
+            taskFileCounter += 1
+            taskFiles.append(file)
+            print(f"{taskFileCounter}: {file}")
+    if taskFileCounter != 0:
+        print("Would you like to load a task file? (y/n)")
+        response = input()
+        if response == "y":
+            taskFile = int(input("Enter the number of the task file you would like to load: "))
+            with open(f"{tasksDirectory}/{taskFiles[taskFile - 1]}", "r") as f:
+                tasks = f.readlines()
+            return tasks
+    print("No task files found, please enter your tasks manually:")
+    stringInput = " " 
+    tasks.append("OFF TOPIC")
+    while stringInput != "": 
+        stringInput = input("Enter a task for today: ")
+        if stringInput != "":
+            tasks.append(stringInput) 
+    response = input("Would you like to save these tasks for future use? (y/n)")
+    if response == "y":
+        taskFileName = input("Enter the name of the task file: ")
+        with open(f"{tasksDirectory}/{taskFileName}.rakkiTask", "w") as f:
+            for task in tasks:
+                f.write(f"{task}\n")
+    return tasks
+
+def updateJournal(tasks, note_file): 
+    response = (0,"away")
+    poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
+    poll_tasks_thread.start()
+    poll_tasks_thread.join(timeout=5*60)  # Wait for 5 minutes
+    taskNum, note = response  # Retrieve response
+    writeNote(tasks[taskNum], datetime.datetime.now().strftime("%H:%M:%S"), note_file, note)
+    
+def pollTasks(tasks, response): 
+    response = (0,"Away")
+    for i, task in enumerate(tasks):
+        print(i, task)
+    taskNum = int(input("Enter The task you have worked on so far: "))
+    note = input("Note: ")
+    response = (taskNum, note)
+
+def writeNote(task, time, noteDocument, comment=""): 
+    print(f"Writing to {noteDocument}")
+    output = f"[{time}] : {task} : {comment} \n"
+    with open(noteDocument, "a") as f:
+        print(f"Writing: {output}")
+        f.write(f"{output}")
 
 def play_song(file_path):
     print(f"Playing {file_path}")
@@ -15,31 +69,6 @@ def play_song(file_path):
     pygame.mixer.quit()
     pygame.quit() 
 
-def generateTodaysTasks(): 
-    tasks = [] 
-    stringInput = " " 
-    tasks.append("OFF TOPIC")
-    while stringInput != "": 
-        stringInput = input("Enter a task for today: ")
-        if stringInput != "":
-            tasks.append(stringInput) 
-    return tasks
-
-def pollTasks(tasks, response): 
-    for i, task in enumerate(tasks):
-        print(i, task)
-    response.append(0)  # Default response
-    taskNum = int(input("Enter The task you have worked on so far: "))
-    note = input("Note: ")
-    response[0] = (taskNum, note)
-
-def writeNote(task, time, noteDocument, comment=""): 
-    print(f"Writing to {noteDocument}")
-    output = f"[{time}] : {task} : {comment} \n"
-    with open(noteDocument, "a") as f:
-        print(f"Writing: {output}")
-        f.write(f"{output}")
-
 def printProgressBar(startTime, endTime):
     currentTime = time.time()
     total = endTime - startTime
@@ -47,20 +76,11 @@ def printProgressBar(startTime, endTime):
     progress = elapsed / total
     progressBarWidth = 50  # Set the progress bar width in characters 
     filledChars = int(progress * progressBarWidth)
-    print(f"[{'#' * filledChars}{'-' * (progressBarWidth - filledChars)}] [{progress * 100:.2}%]")
+    print(f"[{'#' * filledChars}{'-' * (progressBarWidth - filledChars)}] [{progress * 100}%]")
 
-def updateJournal(tasks, note_file): 
-    response = []
-    poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
-    poll_tasks_thread.start()
-    poll_tasks_thread.join(timeout=5*60)  # Wait for 5 minutes
-    taskNum, note = response[0]  # Retrieve response
-    writeNote(tasks[taskNum], datetime.datetime.now().strftime("%H:%M:%S"), note_file, note)
-
-def game(interval, sounds):
+def game(interval, sounds,note_folder="journal", task_folder="tasks"):
     i = 0
     # Set the note file to be a file with today's date in a notes folder
-    note_folder = "notes"
     note_date = datetime.date.today().strftime("%Y-%m-%d")
     note_file = f"{note_folder}/{note_date}.rakkiNote"
 
@@ -69,6 +89,10 @@ def game(interval, sounds):
         os.makedirs(note_folder)
     if not os.path.exists(note_file):
         open(note_file, "w").close()
+
+    if not os.path.exists(task_folder):
+        os.makedirs(task_folder) 
+
 
     # Initialize the user to the program 
     print("Good Morning! Welcome to the rakki time management system")
@@ -79,8 +103,8 @@ def game(interval, sounds):
     print("Great! You will be working for", hours, "hours")
 
     print("This program will help you keep track of your time")
-    print("Please enter the tasks you would like to work on today") 
-    tasks = generateTodaysTasks() 
+    print("Initialize Tasks...") 
+    tasks = generateTodaysTasks(task_folder) 
     print("Great! Every 30 minutes I will check up on you") 
     print("Enter the number corresponding to the task you have been working on the majority of the time ")
     print("If you have been working on an off-topic task enter 0")
