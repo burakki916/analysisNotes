@@ -3,6 +3,8 @@ import datetime
 import threading
 import time
 import pygame  # You may need to install this library: pip install pygame
+import queue
+
 def generateTodaysTasks(tasksDirectory): 
     tasks = [] 
     taskFiles = []
@@ -16,6 +18,10 @@ def generateTodaysTasks(tasksDirectory):
         print("Would you like to load a task file? (y/n)")
         response = input()
         if response == "y":
+            if(taskFileCounter == 1): # I need to change this later to reduce repetition 
+                with open(f"{tasksDirectory}/{taskFiles[0]}", "r") as f:
+                    tasks = f.readlines() 
+                return tasks
             taskFile = int(input("Enter the number of the task file you would like to load: "))
             with open(f"{tasksDirectory}/{taskFiles[taskFile - 1]}", "r") as f:
                 tasks = f.readlines()
@@ -35,28 +41,50 @@ def generateTodaysTasks(tasksDirectory):
                 f.write(f"{task}\n")
     return tasks
 
+# def updateJournal(tasks, note_file): 
+#     response = [] # Create a response variable to store the task number and note
+#     poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
+#     poll_tasks_thread.start()
+#     poll_tasks_thread.join(timeout=5*60)  # Wait for 5 minutes
+#     taskNum, note = response[0]  # Retrieve response
+#     print(response[0])
+#     writeNote(tasks[taskNum], datetime.datetime.now().strftime("%H:%M:%S"), note_file, note)
+    
+# def pollTasks(tasks, response): 
+#     print("Polling Tasks")
+#     response.append(0,"Away")
+#     for i, task in enumerate(tasks):
+#         print(i, task)
+#     taskNum = int(input("Enter The task you have worked on so far: "))
+#     note = input("Note: ")
+#     response[-1] = (taskNum, note)
+
+# CHATGPT VERSION
 def updateJournal(tasks, note_file): 
-    response = (0,"away")
+    response = queue.Queue()  # Create a queue for communication
     poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
     poll_tasks_thread.start()
     poll_tasks_thread.join(timeout=5*60)  # Wait for 5 minutes
-    taskNum, note = response  # Retrieve response
+    taskNum, note = response.get()  # Retrieve response
     writeNote(tasks[taskNum], datetime.datetime.now().strftime("%H:%M:%S"), note_file, note)
-    
-def pollTasks(tasks, response): 
-    response = (0,"Away")
+
+def pollTasks(tasks, response_queue): 
+    print("Polling Tasks")
     for i, task in enumerate(tasks):
         print(i, task)
     taskNum = int(input("Enter The task you have worked on so far: "))
     note = input("Note: ")
-    response = (taskNum, note)
-
+    response_queue.put((taskNum, note))  # Put the response in the queue
+# CHATGPT VERSION DONE 
 def writeNote(task, time, noteDocument, comment=""): 
     print(f"Writing to {noteDocument}")
-    output = f"[{time}] : {task} : {comment} \n"
+    output = f"[{time}] : {task} : {comment}"
+    output = remove_escape_sequences(output)
     with open(noteDocument, "a") as f:
         print(f"Writing: {output}")
-        f.write(f"{output}")
+        f.write(f"{output} \n")
+def remove_escape_sequences(string):
+    return string.replace("\n", "")
 
 def play_song(file_path):
     print(f"Playing {file_path}")
