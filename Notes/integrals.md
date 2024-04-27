@@ -117,12 +117,13 @@ $$
 Need to state more. 
 ## State and apply the Squeeze Theorem 7.2.3
 
-## State and apply the "Sequential Criterion:" for Riemann integral (Q 7.1.9)
 $f$ is in $\mathcal{R}[a,b]$  if and only if $\forall \epsilon >0$ there is 
 $\omega_\epsilon(x)$ and $\alpha_\epsilon(x)$, both in $\mathcal{R}[a,b]$ with  
 $$
     \int \alpha_\epsilon - \omega_{\epsilon}  < \epsilon 
 $$
+## State and apply the "Sequential Criterion:" for Riemann integral (Q 7.1.9)
+# TODO 
 ## State and apply the Fundamental Theorem of Calculus (both forms)   
 ### FTC First Form KAGE NO JITSU 
 Let $F(x) : [a,b] \to \mathbb{R}$ and let $f(x) = \frac{d}{dx} F(x)$, 

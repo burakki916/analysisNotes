@@ -40,26 +40,6 @@ def generateTodaysTasks(tasksDirectory):
             for task in tasks:
                 f.write(f"{task}\n")
     return tasks
-
-# def updateJournal(tasks, note_file): 
-#     response = [] # Create a response variable to store the task number and note
-#     poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
-#     poll_tasks_thread.start()
-#     poll_tasks_thread.join(timeout=5*60)  # Wait for 5 minutes
-#     taskNum, note = response[0]  # Retrieve response
-#     print(response[0])
-#     writeNote(tasks[taskNum], datetime.datetime.now().strftime("%H:%M:%S"), note_file, note)
-    
-# def pollTasks(tasks, response): 
-#     print("Polling Tasks")
-#     response.append(0,"Away")
-#     for i, task in enumerate(tasks):
-#         print(i, task)
-#     taskNum = int(input("Enter The task you have worked on so far: "))
-#     note = input("Note: ")
-#     response[-1] = (taskNum, note)
-
-# CHATGPT VERSION
 def updateJournal(tasks, note_file): 
     response = queue.Queue()  # Create a queue for communication
     poll_tasks_thread = threading.Thread(target=pollTasks, args=(tasks, response))
