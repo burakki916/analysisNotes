@@ -9,6 +9,7 @@ def generateTodaysTasks(tasksDirectory):
     tasks = [] 
     taskFiles = []
     taskFileCounter = 0 
+    
     for file in os.listdir(tasksDirectory):
         if(file.endswith(".rakkiTask")):
             taskFileCounter += 1
@@ -54,7 +55,8 @@ def pollTasks(tasks, response_queue):
         print(i, task)
     taskNum = int(input("Enter The task you have worked on so far: "))
     note = input("Note: ")
-    response_queue.put((taskNum, note))  # Put the response in the queue
+    response_queue.put((taskNum, note)) 
+     # Put the response in the queue
 # CHATGPT VERSION DONE 
 def writeNote(task, time, noteDocument, comment=""): 
     print(f"Writing to {noteDocument}")
@@ -141,3 +143,5 @@ if __name__ == "__main__":
     interval = 10  # Set the interval in minutes
     boom = "./boom.mp3" # Vine Boom Sound Effect
     game(interval, [boom])
+    
+

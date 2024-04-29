@@ -105,6 +105,16 @@ $$
     $$
         \int_\alpha ^\alpha = 0
     $$
+- *Property 9 (7.3.6)*
+    If $f$ is continuous on [a,b], the indefinite
+    integral F, defined by
+    $$
+        F(x) = \int_a^x f(t)dt
+    $$
+    is differentiable on [a,b] and
+    $$
+        F'(x) = f(x)
+    $$ 
 
 ## Classes of Riemann Integrable functions (7.2.4, 7.2.5, 7.2.7)
 - Step functions are integrable (7.2.4)
@@ -120,7 +130,11 @@ Need to state more.
 $f$ is in $\mathcal{R}[a,b]$  if and only if $\forall \epsilon >0$ there is 
 $\omega_\epsilon(x)$ and $\alpha_\epsilon(x)$, both in $\mathcal{R}[a,b]$ with  
 $$
-    \int \alpha_\epsilon - \omega_{\epsilon}  < \epsilon 
+    \alpha_\epsilon \leq f \leq \omega_{\epsilon}
+$$ 
+for all $x \in [a,b]$ and 
+$$
+    \int_a^b \alpha_\epsilon - \omega_{\epsilon}  < \epsilon 
 $$
 ## State and apply the "Sequential Criterion:" for Riemann integral (Q 7.1.9)
 # TODO 

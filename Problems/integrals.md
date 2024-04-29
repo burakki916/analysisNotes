@@ -5,7 +5,7 @@
 ```
 
 # Practice Problems 
-## 7.1 What is the Riemann Integral?
+## 7.1 What is the Riemann Integral? Glad you asked!
 ### Problem 11 
 #### Question
 Suppose that $f$ is bounded on $[a,b]$ and that there exists two sequences 
@@ -56,7 +56,7 @@ $$
 \sum_{i=0}^{n-1} f(q_i) (x_{i+1} - x_{i}) = x_n - x_0 =  1 . 
 $$ 
 Thus by *Problem 11* We have that $f$ is not Riemann Integrable. 
-## 7.2
+## 7.2 Riemann Integrable? Aww you should'nt have <3 
 ### Problem 2
 #### Problem 
 
@@ -148,9 +148,89 @@ $$
 therefore there must exist $t_i$ such that $h(t_i) > 0$.
 
 In both possible cases we have shown that $h(x)$ must change sign, thus there must exist $c \in [a,b]$ such that $h(c) = 0$ and thus $f(c) = g(c)$ 
-## 7.3 The Fundamental Theorem of Calculus
+## 7.3 FTC KAGE NO JITSU!
 ### Problem 11  
-#### Problem zs
-Find 
+#### Question 
+Find $F'(x)$ when $F$ is defined on $[0,1]$ by 
+
+a.
+$$
+    F(x) = \int_0^{x^2} ( 1 + t^3)^{-1}dt 
+$$
+b. 
+$$
+    F(x) = \int_{x^2}^{x} ( 1 + t^3)^{-1}dt 
+$$
+#### Solution 
+##### a. 
+$$
+F'(x) = \frac{d}{dx} \int_0^{x^2} ( 1 + t^3)^{-1}dt = (1 + x^6)^{-1} \cdot 2x = \frac{2x}{1 + x^6}
+$$
+##### b. 
+$$
+F'(x) = \frac{d}{dx} \int_{x^2}^{x} ( 1 + t^3)^{-1}dt = 
+\int_{x^2}^{1/2} ( 1 + t^3)^{-1}dt + \int_{1/2}^{x} ( 1 + t^3)^{-1}dt = \\ 
+-\frac{2 \, x}{x^{6} + 1} + \frac{1}{x^{3} + 1}
+$$
 ### Problem 12
+#### Question 
+$$
+f(x) = 
+\begin{cases} 
+x & \text{for } 0 \leq x < 1, \\
+1 & \text{for } 1 \leq x < 2, \\
+x & \text{for } 2 \leq x \leq 3. 
+\end{cases}
+$$
+Obtain formulas for $F(x) = \int_0^x f$ and sketch the graphs of $f$ and $F$. Where is $F$ differentiable? Evaluate $F'(x)$ at all such points.
+#### Solution
+$$
+F(x) = 
+\begin{cases}
+\int _0^{x} f(t)\ dt &= \frac{1}{2} x^2& \text{for } 0 \leq x < 1, \\
+\int _0^{x} f(t) \ dt &= -\frac{1}{2} + x& \text{for } 1 \leq x < 2, \\
+\int _0^{x} f(t) \ dt &= \frac{1}{2}(x^2 -1) & \text{for } 2 \leq x \leq 3. 
+\end{cases}
+$$
+$F(x)$ is differentiable where $f$ is continuous, thus $F$ is differentiable on $[0,2)$ and $(2,3)$. 
+The following is a figure of f 
+![Graph of f](image.png) 
+
+
+The following is a figure of $F$
+
+
+![Graph of F](image-1.png)
+
+We have that $F'(x) = f(x)$ for $x \in [0,2)$ and $(2,3)$
 ### Problem 13 
+The function $g$ is defined on $[0, 3]$ by 
+$$
+g(x) = 
+\begin{cases} 
+-1 & \text{for } 0 \leq x < 2, \\
+1 & \text{for } 2 \leq x \leq 3. 
+\end{cases}
+$$
+
+Find the indefinite integral $G(x) = \int_0^x g$ for $0 \leq x \leq 3$, and sketch the graphs of $g$ and $G$. Does $G'(x) = g(x)$ for all $x$ in $[0, 3]$?
+
+#### Solution
+
+$$
+G(x) = 
+\begin{cases}
+\int g(x) \ dx &= -x & \text{for } 0 \leq x < 2, \\
+\int g(x) \ dx &= -2 + x & \text{for } 2 \leq x \leq 3.
+\end{cases}
+$$
+$$
+G'(x) = g(x) \text{ for } x \in [0,2) \text{ and } (2,3). 
+$$
+The following is a figure of $g$
+
+just imagine it bruh 
+
+The following is a figure of $G$
+
+just imagine it bruh 
